@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ObjectController : MonoBehaviour
 {
+    public List<RepairableObject> repairableObjects = new List<RepairableObject>();
+
     private Vector3 offset;
     private Vector3 velocity = Vector3.zero;
 
@@ -75,7 +77,13 @@ public class ObjectController : MonoBehaviour
             isMoving = false;
             if (selectedObject != null)
             {
-                selectedObject.GetComponent<Collider>().enabled = true;
+                foreach(RepairableObject r in repairableObjects)
+                {
+                    if (! r.TryPlace(selectedObject))
+                    {
+                        selectedObject.GetComponent<Collider>().enabled = true;
+                    }
+                }
             }
         }
     }
