@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public enum ObjectMode
 { 
     Moving,
@@ -26,8 +25,8 @@ public class ObjectController : MonoBehaviour
     private float zCoord;
     private float xRot = 0.0f;
     private float yRot = 0.0f;
-    private float xSpeed = 50.0f;
-    private float ySpeed = 50.0f;
+    private float xSpeed = 150.0f;
+    private float ySpeed = 150.0f;
 
     private float smoothTime = 0.1f;
 
@@ -74,7 +73,6 @@ public class ObjectController : MonoBehaviour
                         if (selectedObject == hitInfo.collider.gameObject)
                         {
                             OnSwitchObjectMode(wasMoving ? ObjectMode.Rotating : ObjectMode.Moving);
-                            wasMoving = !wasMoving;
                         }
                         else
                         {
@@ -129,10 +127,12 @@ public class ObjectController : MonoBehaviour
         switch (newMode)
         {
             case (ObjectMode.Moving):
+                wasMoving = true;
                 selectedObjectMode = ObjectMode.Moving;
                 selectedObject.GetComponent<MeshRenderer>().material.color = Color.red;
                 break;
             case (ObjectMode.Rotating):
+                wasMoving = false;
                 selectedObjectMode = ObjectMode.Rotating;
                 selectedObject.GetComponent<MeshRenderer>().material.color = Color.green;
                 break;
@@ -151,12 +151,16 @@ public class ObjectController : MonoBehaviour
     {
         selectedObject = newObj;
         OnSwitchObjectMode(ObjectMode.Moving);
+        selectedObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         selectedObject.GetComponent<Rigidbody>().useGravity = false;
         selectedObject.GetComponent<Rigidbody>().freezeRotation = true;
         selectedObject.GetComponent<Collider>().enabled = false;
 
         zCoord = Camera.main.WorldToScreenPoint(selectedObject.transform.position).z;
         offset = selectedObject.transform.position - GetMouseAsWorldPoint();
+
+        xRot = selectedObject.transform.eulerAngles.y;
+        yRot = selectedObject.transform.eulerAngles.x;
     }
 
     public void OnDeselectObject()
