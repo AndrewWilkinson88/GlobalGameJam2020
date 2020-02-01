@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class CameraController : MonoBehaviour
 {
     public GameObject currentTarget;
+    public GameObject Floor;
 
+    Vector3 targetPoint;
     float yMinLimit = 5.0f;
     float yMaxLimit = 15.0f;
 
@@ -19,7 +21,7 @@ public class CameraController : MonoBehaviour
 
     float x = 0.0f;
     float y = 0.0f;
-
+    float floorDist;
     bool isSelected = false;
 
     // Start is called before the first frame update
@@ -28,6 +30,10 @@ public class CameraController : MonoBehaviour
         Vector3 angles = transform.eulerAngles;
         x = angles.y;
         y = angles.x;
+
+        //Try to find a balance point between Floor and Object Breaking
+        floorDist = Mathf.Abs(currentTarget.transform.position.y) + Mathf.Abs(Floor.transform.position.y);
+        targetPoint = currentTarget.transform.position - Vector3.up * floorDist / 4.0f;
     }
 
     // Update is called once per frame
@@ -35,8 +41,8 @@ public class CameraController : MonoBehaviour
     {
         if (isSelected)
         {
-            distance = Vector3.Distance(transform.position, currentTarget.transform.position);
-            transform.LookAt(currentTarget.transform);
+            distance = Vector3.Distance(transform.position, targetPoint);
+            transform.LookAt(targetPoint);
 
             x += Input.GetAxis("Mouse X") * xSpeed * distance* 0.02f;
             y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
@@ -45,7 +51,7 @@ public class CameraController : MonoBehaviour
             distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel") * 5, distanceMin, distanceMax);
 
             Quaternion rotation = Quaternion.Euler(y, x, 0);
-            Vector3 position = rotation * new Vector3(0.0f,0.0f,-distance) + currentTarget.transform.position;
+            Vector3 position = rotation * new Vector3(0.0f,0.0f,-distance) + targetPoint;
 
             transform.rotation = rotation;
             transform.position = position;
