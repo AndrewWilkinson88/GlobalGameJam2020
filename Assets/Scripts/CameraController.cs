@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class CameraController : MonoBehaviour
 {
     public GameObject currentTarget;
-    public Button cameraButton;
 
     float yMinLimit = 5.0f;
     float yMaxLimit = 15.0f;
@@ -34,14 +33,6 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (isSelected)
-            {
-                OnDeselectCamera();
-            }
-        }
-
         if (isSelected)
         {
             distance = Vector3.Distance(transform.position, currentTarget.transform.position);
@@ -65,13 +56,11 @@ public class CameraController : MonoBehaviour
     public void OnSelectCamera()
     {
         isSelected = true;
-        cameraButton.interactable = false;
     }
 
     public void OnDeselectCamera()
     {
         isSelected = false;
-        cameraButton.interactable = true;
     }
     public static float ClampAngle(float angle, float min, float max)
     {
