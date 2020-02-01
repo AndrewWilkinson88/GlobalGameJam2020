@@ -32,6 +32,9 @@ public class RepairableObject : MonoBehaviour
                     placeableObjectCanBePlaced.Add(r.transform, false);
                     placeableObjectPos.Add(r.transform, r.transform.position);
                     placeableObjectRot.Add(r.transform, r.transform.rotation);
+
+                    r.gameObject.layer = LayerMask.NameToLayer("unhit");
+                    r.gameObject.AddComponent<KeepInPlay>();
                 }                
             }
         }
@@ -58,20 +61,20 @@ public class RepairableObject : MonoBehaviour
                 if (angle < SNAP_ROTATION)
                 {
                     SetPlaced(g.transform);
-                    Debug.Log("PIECE PLACED");
+                    //Debug.Log("PIECE PLACED");
                     return true;
                 }
                 else {
-                    Debug.Log("PIECE NOT ROTATED CORRECTLY.  ANGLE: " + angle + "  snap rot: " + SNAP_ROTATION);
+                    //Debug.Log("PIECE NOT ROTATED CORRECTLY.  ANGLE: " + angle + "  snap rot: " + SNAP_ROTATION);
                     return false; 
                 }
             } else {
-                Debug.Log("PIECE NOT CLOSE.  dist: " + dist + "  snap dist: " + SNAP_DISTANCE);
+                //Debug.Log("PIECE NOT CLOSE.  dist: " + dist + "  snap dist: " + SNAP_DISTANCE);
                 return false; 
             }
         }
         else {
-            Debug.Log("PIECE NOT PLACABLE");
+            //Debug.Log("PIECE NOT PLACABLE");
             return false; }
     }
 
