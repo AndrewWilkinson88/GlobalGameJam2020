@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using DG.Tweening;
 
 public class RepairableObject : MonoBehaviour
 {
@@ -76,8 +77,9 @@ public class RepairableObject : MonoBehaviour
 
     void SetPlaced(Transform t)
     {
-        t.position = placeableObjectPos[t];
-        t.rotation = placeableObjectRot[t];
+        t.DOMove(placeableObjectPos[t], .5f);
+        t.DORotate(placeableObjectRot[t].eulerAngles, .5f);
+
         Rigidbody r = t.GetComponent<Rigidbody>();
         if (r)
         {
