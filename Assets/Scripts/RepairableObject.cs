@@ -7,7 +7,7 @@ using DG.Tweening;
 public class RepairableObject : MonoBehaviour
 {
     private static float SNAP_DISTANCE = 1f;
-    private static float SNAP_ROTATION = 180f;
+    private static float SNAP_ROTATION = 60f;
 
     List<Transform> placeableObjects = new List<Transform>();
     Dictionary<Transform, bool> placeableObjectCanBePlaced = new Dictionary<Transform, bool>();
