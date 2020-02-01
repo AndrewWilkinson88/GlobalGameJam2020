@@ -25,8 +25,9 @@ public class ObjectController : MonoBehaviour
     private float zCoord;
     private float xRot = 0.0f;
     private float yRot = 0.0f;
+    private float zRot = 0.0f;
     private float xSpeed = 150.0f;
-    private float ySpeed = 150.0f;
+    private float zSpeed = 150.0f;
 
     private float smoothTime = 0.1f;
 
@@ -42,11 +43,12 @@ public class ObjectController : MonoBehaviour
                 selectedObject.transform.position = Vector3.SmoothDamp(selectedObject.transform.position, newPos, ref velocity, smoothTime);
             }
             if(selectedObjectMode == ObjectMode.Rotating)
-            {
-                xRot += Input.GetAxis("Mouse X") * xSpeed * 0.02f;
-                yRot -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
-                Quaternion rotation = Quaternion.Euler(yRot, xRot, 0);
-                selectedObject.transform.rotation = rotation;
+            { 
+                xRot = Input.GetAxis("Mouse X") * xSpeed * 0.02f;
+                zRot = Input.GetAxis("Mouse Y") * zSpeed * 0.02f;
+
+                selectedObject.transform.RotateAround(selectedObject.transform.position, Vector3.up, xRot);
+                selectedObject.transform.RotateAround(selectedObject.transform.position, Vector3.right, zRot);
             }
         }
     }
@@ -129,6 +131,8 @@ public class ObjectController : MonoBehaviour
             case (ObjectMode.Moving):
                 wasMoving = true;
                 selectedObjectMode = ObjectMode.Moving;
+                zCoord = Camera.main.WorldToScreenPoint(selectedObject.transform.position).z;
+                offset = selectedObject.transform.position - GetMouseAsWorldPoint();
                 selectedObject.GetComponent<MeshRenderer>().material.color = Color.red;
                 break;
             case (ObjectMode.Rotating):
@@ -155,12 +159,6 @@ public class ObjectController : MonoBehaviour
         selectedObject.GetComponent<Rigidbody>().useGravity = false;
         selectedObject.GetComponent<Rigidbody>().freezeRotation = true;
         selectedObject.GetComponent<Collider>().enabled = false;
-
-        zCoord = Camera.main.WorldToScreenPoint(selectedObject.transform.position).z;
-        offset = selectedObject.transform.position - GetMouseAsWorldPoint();
-
-        xRot = selectedObject.transform.eulerAngles.y;
-        yRot = selectedObject.transform.eulerAngles.x;
     }
 
     public void OnDeselectObject()
