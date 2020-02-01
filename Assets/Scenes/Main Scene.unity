@@ -200,6 +200,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be84868ca42f8841803f6137bb132ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  repairableObjects:
+  - {fileID: 1909906983}
   selectedObject: {fileID: 0}
   floor: {fileID: 734729130}
 --- !u!1 &379464787 stripped
@@ -886,7 +888,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentTarget: {fileID: 1909906982}
-  cameraButton: {fileID: 0}
 --- !u!1 &1029842874 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1467635215933024041, guid: 3eff23be274ceb349a2aacbbf6df9cef,
