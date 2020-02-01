@@ -62,10 +62,12 @@ public class RepairableObject : MonoBehaviour
                 }
                 else {
                     Debug.Log("PIECE NOT ROTATED CORRECTLY.  ANGLE: " + angle + "  snap rot: " + SNAP_ROTATION);
-                    return false; }
+                    return false; 
+                }
             } else {
                 Debug.Log("PIECE NOT CLOSE.  dist: " + dist + "  snap dist: " + SNAP_DISTANCE);
-                return false; }
+                return false; 
+            }
         }
         else {
             Debug.Log("PIECE NOT PLACABLE");

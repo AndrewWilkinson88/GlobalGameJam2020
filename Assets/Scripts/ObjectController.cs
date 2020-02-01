@@ -79,9 +79,16 @@ public class ObjectController : MonoBehaviour
             {
                 foreach(RepairableObject r in repairableObjects)
                 {
-                    if (! r.TryPlace(selectedObject))
+                    bool tryPlace = r.TryPlace(selectedObject);
+                    if (!tryPlace)
                     {
                         selectedObject.GetComponent<Collider>().enabled = true;
+                    }
+                    else
+                    {
+                        selectedObject.layer = LayerMask.NameToLayer("hit");
+                        selectedObject.GetComponent<MeshRenderer>().material.color = Color.grey;
+                        selectedObject = null;
                     }
                 }
             }
