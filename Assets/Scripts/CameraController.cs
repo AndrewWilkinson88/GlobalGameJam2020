@@ -50,7 +50,6 @@ public class CameraController : MonoBehaviour
             transform.rotation = rotation;
             transform.position = position;
         }
-
     }
 
     public void OnSelectCamera()
