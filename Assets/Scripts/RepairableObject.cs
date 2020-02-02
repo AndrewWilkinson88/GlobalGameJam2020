@@ -19,10 +19,12 @@ public class RepairableObject : MonoBehaviour
     int initialPlacedIndex;
 
     int numPlaced = 0;
+    public bool isInitialized = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        isInitialized = false;
         Rigidbody[] rs = gameObject.GetComponentsInChildren<Rigidbody>();
         if (rs != null)
         {
@@ -37,10 +39,40 @@ public class RepairableObject : MonoBehaviour
 
                     r.gameObject.layer = LayerMask.NameToLayer("unhit");
                     r.gameObject.AddComponent<KeepInPlay>();
+                    HandleMouseDown m = r.gameObject.AddComponent<HandleMouseDown>();
+                    m.target = this;
 
-                    r.AddExplosionForce(300f, transform.position, 5, 3.0F);
-                }                
+                    r.isKinematic = true;
+                    //r.AddExplosionForce(300f, transform.position, 5, 3.0F);
+                }
             }
+        }
+
+        float originalY = transform.position.y;
+
+        transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
+
+        transform.DOLocalMoveY(originalY, 3);
+    }
+
+    public void HandleClicked()
+    {
+        Debug.Log("MOUSE DOWN!");
+        if (isInitialized == false)
+        {
+            StartObject();
+            isInitialized = true;
+        }        
+    }
+
+    void StartObject()
+    { 
+
+        foreach (Transform t in placeableObjects)
+        {
+            Rigidbody r = t.gameObject.GetComponent<Rigidbody>();
+            r.isKinematic = false;
+            r.AddExplosionForce(300f, transform.position, 5, 3.0F);
         }
 
         initialPlacedIndex = Random.Range(0, placeableObjects.Count);

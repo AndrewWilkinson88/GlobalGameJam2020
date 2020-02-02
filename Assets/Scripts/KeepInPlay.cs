@@ -5,6 +5,7 @@ using UnityEngine;
 public class KeepInPlay : MonoBehaviour
 {
     static Vector3 WORLD_LIMITS = new Vector3(15, -1, 15);
+    static float resetY = 6f;
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +18,7 @@ public class KeepInPlay : MonoBehaviour
     {
         if (transform.position.y < WORLD_LIMITS.y)
         {
-            transform.position = new Vector3(0, 2, 0);
+            transform.position = new Vector3(0, resetY, 0);
             ZeroVelocity();
         }
         if (transform.position.x > WORLD_LIMITS.x)

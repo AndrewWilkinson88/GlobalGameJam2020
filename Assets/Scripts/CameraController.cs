@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class CameraController : MonoBehaviour
 {
@@ -33,15 +34,18 @@ public class CameraController : MonoBehaviour
 
         //Try to find a balance point between Floor and Object Breaking
         targetPoint = currentTarget.transform.position - Vector3.up * 1.0f;
+
+        //transform.DOLookAt(targetPoint, 2);
+        transform.DOMove(new Vector3(targetPoint.x - 5, targetPoint.y + .5f, targetPoint.z), 2);
     }
 
     // Update is called once per frame
     void Update()
     {
+        transform.LookAt(targetPoint);
         if (isSelected)
         {
             distance = Vector3.Distance(transform.position, targetPoint);
-            transform.LookAt(targetPoint);
 
             x += Input.GetAxis("Mouse X") * xSpeed * distance* 0.02f;
             y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;

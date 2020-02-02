@@ -81,6 +81,15 @@ public class ObjectController : MonoBehaviour
     // Late Update is called once per frame, after all other Updates
     private void LateUpdate()
     {
+        bool repairableObjectInitialized = false;
+        foreach(RepairableObject r in repairableObjects)
+        {
+            if (r.isInitialized)
+            {
+                repairableObjectInitialized = true;
+            }
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit hitInfo;
@@ -94,6 +103,12 @@ public class ObjectController : MonoBehaviour
                 //Hit an Object
                 else
                 {
+                    //Things are only selectable once the repairable object is initialized
+                    if (repairableObjectInitialized == false)
+                    {
+                        return;
+                    }
+
                     Camera.main.GetComponent<CameraController>().OnDeselectCamera();
                     if (selectedObject != null)
                     {
