@@ -8,6 +8,7 @@ public class RepairableObjectManager : MonoBehaviour
 {
     public Image fadeImage;
     public Image fadeLogo;
+    public Text fadeText;
     public ObjectController objectConroller;
     public List<RepairableObject> repairableObjects;
     public int currentObjectIndex = 0;
@@ -95,7 +96,8 @@ public class RepairableObjectManager : MonoBehaviour
         c.DOLookAt(new Vector3(c.position.x, 0, c.position.z), 5);
         
         fadeImage.DOFade(1, 10);
-        fadeLogo.DOFade(1, 2).SetDelay(9f);
+        fadeLogo.DOFade(1, 2).SetDelay(7f);
+        fadeText.DOFade(1, 2).SetDelay(8f); 
     }
 
     // Update is called once per frame
