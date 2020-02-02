@@ -6,8 +6,10 @@ using DG.Tweening;
 
 public class RepairableObject : MonoBehaviour
 {
-    private static float SNAP_DISTANCE = 1f;
-    private static float SNAP_ROTATION = 60f;
+    private static float SNAP_DISTANCE = 5f;
+    private static float SNAP_ROTATION = 180f;
+
+    public RepairableObjectManager manager;
 
     List<Transform> placeableObjects = new List<Transform>();
     Dictionary<Transform, bool> placeableObjectCanBePlaced = new Dictionary<Transform, bool>();
@@ -20,12 +22,17 @@ public class RepairableObject : MonoBehaviour
 
     int numPlaced = 0;
     public bool isInitialized = false;
+    public bool finished = false;
+
+    public ParticleSystem completeParticles;
 
     // Start is called before the first frame update
     void Start()
     {
         isInitialized = false;
+        finished = false;
         Rigidbody[] rs = gameObject.GetComponentsInChildren<Rigidbody>();
+        //Debug.Log("STARTING OBJECT:  " + gameObject.name +"  rigidbodies:  "+ rs.Length);
         if (rs != null)
         {
             foreach (Rigidbody r in rs)
@@ -50,7 +57,7 @@ public class RepairableObject : MonoBehaviour
 
         float originalY = transform.position.y;
 
-        transform.position = new Vector3(transform.position.x, transform.position.y + 2, transform.position.z);
+        transform.position = new Vector3(transform.position.x, transform.position.y + 3, transform.position.z);
 
         transform.DOLocalMoveY(originalY, 3);
     }
@@ -119,7 +126,7 @@ public class RepairableObject : MonoBehaviour
     {
         t.gameObject.layer = LayerMask.NameToLayer("hit");
         t.DOMove(placeableObjectPos[t], .5f);
-        t.DORotate(placeableObjectRot[t].eulerAngles, .5f);
+        t.DORotate(placeableObjectRot[t].eulerAngles, .5f).OnComplete(CheckFinished);
 
         Rigidbody r = t.GetComponent<Rigidbody>();
         if (r)
@@ -131,6 +138,25 @@ public class RepairableObject : MonoBehaviour
         if(numPlaced >= placeableObjects.Count)
         {
             Debug.Log("YOU WIN!");
+            finished = true;            
         }
+    }
+
+    void CheckFinished()
+    {
+        if (finished) { 
+            if(completeParticles)
+            {
+                completeParticles.Play();
+            }
+            transform.DOShakePosition(3, .1f);
+            transform.DOLocalMoveY(transform.position.y + 3, 3).OnComplete(StartNextObject);
+        }
+    }
+
+    void StartNextObject()
+    {
+        if (manager)
+            manager.NextRepairableObject();
     }
 }

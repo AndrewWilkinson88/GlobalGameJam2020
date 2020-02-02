@@ -17,7 +17,8 @@ public class ObjectController : MonoBehaviour
     public AudioSource placedSound;
 
 
-    public List<RepairableObject> repairableObjects = new List<RepairableObject>();
+    //public List<RepairableObject> repairableObjects = new List<RepairableObject>();
+    RepairableObject curRepairableObject;
     private Vector3 offset;
     private Vector3 velocity = Vector3.zero;
 
@@ -82,12 +83,10 @@ public class ObjectController : MonoBehaviour
     private void LateUpdate()
     {
         bool repairableObjectInitialized = false;
-        foreach(RepairableObject r in repairableObjects)
+        
+        if (curRepairableObject && curRepairableObject.isInitialized)
         {
-            if (r.isInitialized)
-            {
-                repairableObjectInitialized = true;
-            }
+            repairableObjectInitialized = true;
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -136,16 +135,11 @@ public class ObjectController : MonoBehaviour
             OnSwitchObjectMode(ObjectMode.Stationary);
             if (selectedObject != null)
             {
-                bool tryPlace = false;
-                foreach (RepairableObject r in repairableObjects)
+                bool tryPlace = curRepairableObject.TryPlace(selectedObject);
+                if (tryPlace)
                 {
-                    tryPlace = r.TryPlace(selectedObject);
-                    if (tryPlace)
-                    {
-                        OnLockObject();
-                        break;
-                    }
-                }
+                    OnLockObject();
+                }                
 
                 if (!tryPlace)
                 {
@@ -154,6 +148,11 @@ public class ObjectController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void SetCurrentRepairableObject(RepairableObject r)
+    {
+        curRepairableObject = r;
     }
 
     private Vector3 GetMouseAsWorldPoint()
