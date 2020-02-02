@@ -1,14 +1,29 @@
-Japanese Room
+Japanese Room Model
 Author: SepHex
 https://sketchfab.com/3d-models/japanese-room-ba899cf607e44dd5a48dd78f31fd29b9
 
-Making a Logo
+Radio Model
+Author: aleksicaxd
+https://free3d.com/3d-model/radio-51766.html
+
+Making a Logo Tutorial
 Tutorial with a bunch of Paint.net Plugins used
 https://forums.getpaint.net/topic/25299-creating-a-new-company-logo/
+
+Pop Rum Cute - Font used in title
+https://www.freejapanesefont.com/pop-rum-cute-download/
 
 DoTween
 Tweeing Library
 http://dotween.demigiant.com/
+
+Skybox Cubemap Extended
+Author: BOXOPHOBIC
+https://assetstore.unity.com/packages/vfx/shaders/free-skybox-cubemap-extended-shader-standard-edition-107400
+
+Simple FX - Cartoon Particles
+Author: Synty Studios
+https://assetstore.unity.com/packages/vfx/particles/simple-fx-cartoon-particles-67834
 
 Toon Shader
 Tutorial on how to make a Toon Shader
