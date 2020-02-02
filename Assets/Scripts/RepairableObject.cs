@@ -150,7 +150,7 @@ public class RepairableObject : MonoBehaviour
                 completeParticles.Play();
             }
             transform.DOShakePosition(3, .1f);
-            transform.DOLocalMoveY(transform.position.y + 3, 3).OnComplete(StartNextObject);
+            transform.DOLocalMoveY(transform.position.y + 3.5f, 3).OnComplete(StartNextObject);
         }
     }
 
