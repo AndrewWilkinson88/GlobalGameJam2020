@@ -74,7 +74,15 @@ public class ObjectController : MonoBehaviour
                 }
 
                 selectedObject.transform.RotateAround(selectedObject.transform.position, Vector3.up, xRot);
-                selectedObject.transform.RotateAround(selectedObject.transform.position, Vector3.forward, zRot);
+
+                if (Vector3.Dot(selectedObject.transform.forward, Vector3.forward) > 0.0f)
+                {
+                    selectedObject.transform.RotateAround(selectedObject.transform.position, Vector3.forward, zRot);
+                }
+                else;
+                {
+                    selectedObject.transform.RotateAround(selectedObject.transform.position, Vector3.right, zRot);
+                }
             }
         }
     }
