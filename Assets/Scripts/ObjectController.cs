@@ -31,6 +31,10 @@ public class ObjectController : MonoBehaviour
 
     private float smoothTime = 0.1f;
 
+    private void Start()
+    {
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -111,8 +115,6 @@ public class ObjectController : MonoBehaviour
                 {
                     Collider col = selectedObject.GetComponent<Collider>();
                     if (col) col.enabled = true;
-                    Rigidbody r = selectedObject.GetComponent<Rigidbody>();
-                    if (r) r.isKinematic = true;
                 }
             }
         }
@@ -184,7 +186,6 @@ public class ObjectController : MonoBehaviour
         {
             r.useGravity = true;
             r.freezeRotation = false;
-            r.isKinematic = false;
         }
         Collider c = selectedObject.GetComponent<Collider>();
         if (c)
@@ -197,7 +198,6 @@ public class ObjectController : MonoBehaviour
 
     public void OnLockObject()
     {
-        selectedObject.layer = LayerMask.NameToLayer("hit");
         OnSwitchObjectMode(ObjectMode.None);
         selectedObject = null;
     }

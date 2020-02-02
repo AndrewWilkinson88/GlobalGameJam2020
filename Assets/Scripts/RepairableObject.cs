@@ -17,6 +17,9 @@ public class RepairableObject : MonoBehaviour
     Dictionary<Transform, List<Transform>> neighbors = new Dictionary<Transform, List<Transform>>();
 
     int initialPlacedIndex;
+
+    int numPlaced = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -80,6 +83,7 @@ public class RepairableObject : MonoBehaviour
 
     void SetPlaced(Transform t)
     {
+        t.gameObject.layer = LayerMask.NameToLayer("hit");
         t.DOMove(placeableObjectPos[t], .5f);
         t.DORotate(placeableObjectRot[t].eulerAngles, .5f);
 
@@ -87,6 +91,12 @@ public class RepairableObject : MonoBehaviour
         if (r)
         {
             r.isKinematic = true;
+        }
+
+        numPlaced++;
+        if(numPlaced >= placeableObjects.Count)
+        {
+            Debug.Log("YOU WIN!");
         }
     }
 }
