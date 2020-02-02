@@ -206,6 +206,12 @@ public class ObjectController : MonoBehaviour
 
     public void OnSelectObject(GameObject newObj)
     {
+        if(curRepairableObject.piecesPlaced() == 0)
+        {
+            curRepairableObject.SetPlaced(newObj.transform);
+            return;
+        }
+
         selectedObject = newObj;
         savedColor = newObj.GetComponent<MeshRenderer>().material.GetColor("_AmbientColor");
         OnSwitchObjectMode(ObjectMode.Moving);

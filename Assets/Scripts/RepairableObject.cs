@@ -82,8 +82,13 @@ public class RepairableObject : MonoBehaviour
             r.AddExplosionForce(300f, transform.position, 5, 3.0F);
         }
 
-        initialPlacedIndex = Random.Range(0, placeableObjects.Count);
-        SetPlaced(placeableObjects[initialPlacedIndex]);
+        /*initialPlacedIndex = Random.Range(0, placeableObjects.Count);
+        SetPlaced(placeableObjects[initialPlacedIndex]);*/
+    }
+
+    public int piecesPlaced()
+    {
+        return numPlaced;
     }
 
     // Update is called once per frame
@@ -122,7 +127,7 @@ public class RepairableObject : MonoBehaviour
         }
     }
 
-    void SetPlaced(Transform t)
+    public void SetPlaced(Transform t)
     {
         t.gameObject.layer = LayerMask.NameToLayer("hit");
         t.DOMove(placeableObjectPos[t], .5f);
