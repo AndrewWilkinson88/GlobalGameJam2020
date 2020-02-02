@@ -96,17 +96,23 @@ public class ObjectController : MonoBehaviour
             OnSwitchObjectMode(ObjectMode.Stationary);
             if (selectedObject != null)
             {
+                bool tryPlace = false;
                 foreach (RepairableObject r in repairableObjects)
                 {
-                    bool tryPlace = r.TryPlace(selectedObject);
+                    tryPlace = r.TryPlace(selectedObject);
                     if (tryPlace)
                     {
                         OnLockObject();
+                        break;
                     }
-                    else
-                    {
-                        selectedObject.GetComponent<Collider>().enabled = true;
-                    }
+                }
+
+                if (!tryPlace)
+                {
+                    Collider col = selectedObject.GetComponent<Collider>();
+                    if (col) col.enabled = true;
+                    Rigidbody r = selectedObject.GetComponent<Rigidbody>();
+                    if (r) r.isKinematic = true;
                 }
             }
         }
@@ -155,18 +161,37 @@ public class ObjectController : MonoBehaviour
     {
         selectedObject = newObj;
         OnSwitchObjectMode(ObjectMode.Moving);
-        selectedObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        selectedObject.GetComponent<Rigidbody>().useGravity = false;
-        selectedObject.GetComponent<Rigidbody>().freezeRotation = true;
-        selectedObject.GetComponent<Collider>().enabled = false;
+
+        Rigidbody r = selectedObject.GetComponent<Rigidbody>();
+        if (r)
+        {
+            r.velocity = Vector3.zero;
+            r.useGravity = false;
+            r.freezeRotation = true;
+        }
+        Collider c = selectedObject.GetComponent<Collider>();
+        if (c)
+        {
+            c.enabled = false;
+        }
     }
 
     public void OnDeselectObject()
     {
         OnSwitchObjectMode(ObjectMode.None);
-        selectedObject.GetComponent<Rigidbody>().useGravity = true;
-        selectedObject.GetComponent<Rigidbody>().freezeRotation = false;
-        selectedObject.GetComponent<Collider>().enabled = true;
+        Rigidbody r = selectedObject.GetComponent<Rigidbody>();
+        if (r)
+        {
+            r.useGravity = true;
+            r.freezeRotation = false;
+            r.isKinematic = false;
+        }
+        Collider c = selectedObject.GetComponent<Collider>();
+        if (c)
+        {
+            c.enabled = true;
+        }
+
         selectedObject = null;
     }
 

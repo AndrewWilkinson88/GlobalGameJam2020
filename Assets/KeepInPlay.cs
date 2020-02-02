@@ -47,7 +47,7 @@ public class KeepInPlay : MonoBehaviour
         Rigidbody r = GetComponent<Rigidbody>();
         if (r)
         {
-            r.velocity = new Vector3(0, 0, 0);
+            r.velocity = Vector3.zero;
         }
     }
 }
