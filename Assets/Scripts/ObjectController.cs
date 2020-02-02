@@ -47,9 +47,19 @@ public class ObjectController : MonoBehaviour
                 selectedObject.transform.position = Vector3.SmoothDamp(selectedObject.transform.position, newPos, ref velocity, smoothTime);
             }
             if(selectedObjectMode == ObjectMode.Rotating)
-            { 
-                xRot = Input.GetAxis("Mouse X") * xSpeed * 0.02f;
-                zRot = Input.GetAxis("Mouse Y") * zSpeed * 0.02f;
+            {
+                float xInput = Input.GetAxis("Mouse X");
+                float yInput = Input.GetAxis("Mouse Y");
+                if (Mathf.Abs(xInput) > Mathf.Abs(yInput))
+                {
+                    xRot = xInput * xSpeed * 0.02f;
+                    zRot = 0.0f;
+                }
+                else
+                {
+                    zRot = yInput * zSpeed * 0.02f;
+                    xRot = 0.0f;
+                }
 
                 selectedObject.transform.RotateAround(selectedObject.transform.position, Vector3.up, xRot);
                 selectedObject.transform.RotateAround(selectedObject.transform.position, Vector3.right, zRot);
