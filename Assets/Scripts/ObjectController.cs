@@ -16,6 +16,7 @@ public class ObjectController : MonoBehaviour
     public AudioSource rotateSound;
     public AudioSource placedSound;
 
+
     public List<RepairableObject> repairableObjects = new List<RepairableObject>();
     private Vector3 offset;
     private Vector3 velocity = Vector3.zero;
@@ -25,6 +26,7 @@ public class ObjectController : MonoBehaviour
 
     public ObjectMode selectedObjectMode = ObjectMode.None;
     private bool wasMoving = false;
+    private Color savedColor;
 
     private float zCoord;
     private float xRot = 0.0f;
@@ -53,7 +55,7 @@ public class ObjectController : MonoBehaviour
             if(selectedObjectMode == ObjectMode.Rotating)
             {
                 float xInput = Input.GetAxis("Mouse X");
-                float yInput = Input.GetAxis("Mouse Y");
+                float yInput = -Input.GetAxis("Mouse Y");
                 if (Mathf.Abs(xInput) > Mathf.Abs(yInput))
                 {
                     xRot = xInput * xSpeed * 0.02f;
@@ -66,7 +68,7 @@ public class ObjectController : MonoBehaviour
                 }
 
                 selectedObject.transform.RotateAround(selectedObject.transform.position, Vector3.up, xRot);
-                selectedObject.transform.RotateAround(selectedObject.transform.position, Vector3.right, zRot);
+                selectedObject.transform.RotateAround(selectedObject.transform.position, Vector3.forward, zRot);
             }
         }
     }
@@ -155,13 +157,13 @@ public class ObjectController : MonoBehaviour
                 selectedObjectMode = ObjectMode.Moving;
                 zCoord = Camera.main.WorldToScreenPoint(selectedObject.transform.position).z;
                 offset = selectedObject.transform.position - GetMouseAsWorldPoint();
-                selectedObject.GetComponent<MeshRenderer>().material.color = Color.red;
+                selectedObject.GetComponent<MeshRenderer>().material.SetColor("_AmbientColor", Color.red);
                 moveSound.Play();
                 break;
             case (ObjectMode.Rotating):
                 wasMoving = false;
                 selectedObjectMode = ObjectMode.Rotating;
-                selectedObject.GetComponent<MeshRenderer>().material.color = Color.green;
+                selectedObject.GetComponent<MeshRenderer>().material.SetColor("_AmbientColor", Color.green);
                 rotateSound.Play();
                 break;
             case (ObjectMode.Stationary):
@@ -169,7 +171,7 @@ public class ObjectController : MonoBehaviour
                 break;
             case (ObjectMode.None):
             default:
-                selectedObject.GetComponent<MeshRenderer>().material.color = Color.white;
+                selectedObject.GetComponent<MeshRenderer>().material.SetColor("_AmbientColor", savedColor);
                 selectedObjectMode = ObjectMode.None;
                 break;
         }
@@ -178,6 +180,7 @@ public class ObjectController : MonoBehaviour
     public void OnSelectObject(GameObject newObj)
     {
         selectedObject = newObj;
+        savedColor = newObj.GetComponent<MeshRenderer>().material.GetColor("_AmbientColor");
         OnSwitchObjectMode(ObjectMode.Moving);
 
         Rigidbody r = selectedObject.GetComponent<Rigidbody>();

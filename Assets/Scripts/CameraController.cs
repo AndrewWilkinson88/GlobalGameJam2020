@@ -32,8 +32,7 @@ public class CameraController : MonoBehaviour
         y = angles.x;
 
         //Try to find a balance point between Floor and Object Breaking
-        floorDist = Mathf.Abs(currentTarget.transform.position.y) + Mathf.Abs(Floor.transform.position.y);
-        targetPoint = currentTarget.transform.position - Vector3.up * floorDist / 4.0f;
+        targetPoint = currentTarget.transform.position - Vector3.up * 1.0f;
     }
 
     // Update is called once per frame

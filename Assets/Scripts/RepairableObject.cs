@@ -23,7 +23,6 @@ public class RepairableObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
         Rigidbody[] rs = gameObject.GetComponentsInChildren<Rigidbody>();
         if (rs != null)
         {
@@ -46,8 +45,6 @@ public class RepairableObject : MonoBehaviour
 
         initialPlacedIndex = Random.Range(0, placeableObjects.Count);
         SetPlaced(placeableObjects[initialPlacedIndex]);
-
-
     }
 
     // Update is called once per frame
@@ -72,17 +69,18 @@ public class RepairableObject : MonoBehaviour
                     return true;
                 }
                 else {
-                    //Debug.Log("PIECE NOT ROTATED CORRECTLY.  ANGLE: " + angle + "  snap rot: " + SNAP_ROTATION);
+                    Debug.Log("PIECE NOT ROTATED CORRECTLY.  ANGLE: " + angle + "  snap rot: " + SNAP_ROTATION);
                     return false; 
                 }
             } else {
-                //Debug.Log("PIECE NOT CLOSE.  dist: " + dist + "  snap dist: " + SNAP_DISTANCE);
+                Debug.Log("PIECE NOT CLOSE.  dist: " + dist + "  snap dist: " + SNAP_DISTANCE);
                 return false; 
             }
         }
         else {
-            //Debug.Log("PIECE NOT PLACABLE");
-            return false; }
+            Debug.Log("PIECE NOT PLACABLE");
+            return false; 
+        }
     }
 
     void SetPlaced(Transform t)
