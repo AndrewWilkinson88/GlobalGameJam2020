@@ -12,6 +12,10 @@ public enum ObjectMode
 
 public class ObjectController : MonoBehaviour
 {
+    public AudioSource moveSound;
+    public AudioSource rotateSound;
+    public AudioSource placedSound;
+
     public List<RepairableObject> repairableObjects = new List<RepairableObject>();
     private Vector3 offset;
     private Vector3 velocity = Vector3.zero;
@@ -152,11 +156,13 @@ public class ObjectController : MonoBehaviour
                 zCoord = Camera.main.WorldToScreenPoint(selectedObject.transform.position).z;
                 offset = selectedObject.transform.position - GetMouseAsWorldPoint();
                 selectedObject.GetComponent<MeshRenderer>().material.color = Color.red;
+                moveSound.Play();
                 break;
             case (ObjectMode.Rotating):
                 wasMoving = false;
                 selectedObjectMode = ObjectMode.Rotating;
                 selectedObject.GetComponent<MeshRenderer>().material.color = Color.green;
+                rotateSound.Play();
                 break;
             case (ObjectMode.Stationary):
                 selectedObjectMode = ObjectMode.Stationary;
@@ -210,5 +216,6 @@ public class ObjectController : MonoBehaviour
     {
         OnSwitchObjectMode(ObjectMode.None);
         selectedObject = null;
+        placedSound.Play();
     }
 }

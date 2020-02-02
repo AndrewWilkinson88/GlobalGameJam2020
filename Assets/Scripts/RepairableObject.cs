@@ -38,12 +38,16 @@ public class RepairableObject : MonoBehaviour
 
                     r.gameObject.layer = LayerMask.NameToLayer("unhit");
                     r.gameObject.AddComponent<KeepInPlay>();
+
+                    r.AddExplosionForce(300f, transform.position, 5, 3.0F);
                 }                
             }
         }
 
         initialPlacedIndex = Random.Range(0, placeableObjects.Count);
         SetPlaced(placeableObjects[initialPlacedIndex]);
+
+
     }
 
     // Update is called once per frame
