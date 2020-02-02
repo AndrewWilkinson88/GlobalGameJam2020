@@ -44,6 +44,11 @@ public class ObjectController : MonoBehaviour
     {
         if( selectedObject != null )
         {
+            Rigidbody r = selectedObject.GetComponent<Rigidbody>();
+            if (r)
+            {
+                r.velocity = Vector3.zero;
+            }
             if (selectedObjectMode == ObjectMode.Moving)
             {
                 Vector3 newPos = GetMouseAsWorldPoint() + offset;
