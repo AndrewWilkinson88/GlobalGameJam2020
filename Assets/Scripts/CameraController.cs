@@ -28,12 +28,15 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Try to find a balance point between Floor and Object Breaking
+        targetPoint = currentTarget.transform.position - Vector3.up * 1.0f;
+    }
+
+    public void StartGame()
+    {
         Vector3 angles = transform.eulerAngles;
         x = angles.y;
         y = angles.x;
-
-        //Try to find a balance point between Floor and Object Breaking
-        targetPoint = currentTarget.transform.position - Vector3.up * 1.0f;
 
         //transform.DOLookAt(targetPoint, 2);
         transform.DOMove(new Vector3(targetPoint.x - 7, targetPoint.y + .75f, targetPoint.z), 2);
@@ -42,6 +45,8 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (targetPoint == null)
+            return;
         transform.LookAt(targetPoint);
         if (isSelected)
         {
