@@ -6,8 +6,8 @@ using DG.Tweening;
 
 public class RepairableObject : MonoBehaviour
 {
-    private static float SNAP_DISTANCE = 5f;
-    private static float SNAP_ROTATION = 180f;
+    private static float SNAP_DISTANCE = 1f;
+    private static float SNAP_ROTATION = 60f;
 
     public RepairableObjectManager manager;
 
