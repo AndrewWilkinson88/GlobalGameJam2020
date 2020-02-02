@@ -1,0 +1,16 @@
+Japanese Room
+Author: SepHex
+https://sketchfab.com/3d-models/japanese-room-ba899cf607e44dd5a48dd78f31fd29b9
+
+Making a Logo
+Tutorial with a bunch of Paint.net Plugins used
+https://forums.getpaint.net/topic/25299-creating-a-new-company-logo/
+
+DoTween
+Tweeing Library
+http://dotween.demigiant.com/
+
+Toon Shader
+Tutorial on how to make a Toon Shader
+https://roystan.net/articles/toon-shader.html
+
