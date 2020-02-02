@@ -126,7 +126,7 @@ public class RepairableObject : MonoBehaviour
     {
         t.gameObject.layer = LayerMask.NameToLayer("hit");
         t.DOMove(placeableObjectPos[t], .5f);
-        t.DORotate(placeableObjectRot[t].eulerAngles, .5f).OnComplete(CheckFinished);
+        t.DORotateQuaternion(placeableObjectRot[t],.5f).OnComplete(CheckFinished);        
 
         Rigidbody r = t.GetComponent<Rigidbody>();
         if (r)
