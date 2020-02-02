@@ -27,9 +27,16 @@ public class RepairableObjectManager : MonoBehaviour
 
     }
 
+    public IEnumerator DeactivateAfterTwoSeconds(GameObject go)
+    {
+        yield return new WaitForSeconds(2);
+        go.SetActive(false);
+    }
+
     public void NextRepairableObject()
     {
-        repairableObjects[currentObjectIndex].gameObject.SetActive(false);
+        //repairableObjects[currentObjectIndex].gameObject.SetActive(false);
+        StartCoroutine(DeactivateAfterTwoSeconds(repairableObjects[currentObjectIndex].gameObject));        
         currentObjectIndex++;
         if (currentObjectIndex < repairableObjects.Count)
         {
