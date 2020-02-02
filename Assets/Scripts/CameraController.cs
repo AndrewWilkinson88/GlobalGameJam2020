@@ -36,7 +36,7 @@ public class CameraController : MonoBehaviour
         targetPoint = currentTarget.transform.position - Vector3.up * 1.0f;
 
         //transform.DOLookAt(targetPoint, 2);
-        transform.DOMove(new Vector3(targetPoint.x - 5, targetPoint.y + .5f, targetPoint.z), 2);
+        transform.DOMove(new Vector3(targetPoint.x - 7, targetPoint.y + .75f, targetPoint.z), 2);
     }
 
     // Update is called once per frame
